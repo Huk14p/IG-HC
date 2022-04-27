@@ -11,8 +11,8 @@ import argparse
 import threading
 import subprocess
 from platform import platform
-from Core.tor import *
-from Core.browser import *
+from tor import TorManager
+from browser import Browser
 
 class Instagram(TorManager,Browser):
 	def __init__(self,username,wordlist):
@@ -172,24 +172,24 @@ class Instagram(TorManager,Browser):
 			self.changeIp()
 			time.sleep(1.3)
 			self.display()
-	def main(self):
-		# assign arugments
-		args = argparse.ArgumentParser()
-		args.add_argument('username',help='Email or username')
-		args.add_argument('wordlist',help='wordlist')
-		args =  args.parse_args()
+def main(self):
+	# assign arugments
+	args = argparse.ArgumentParser()
+	args.add_argument('username',help='Email or username')
+	args.add_argument('wordlist',help='wordlist')
+	args =  args.parse_args()
 
-		# assign variables
-		engine = Instagram(args.username,args.wordlist)
+	# assign variables
+	engine = Instagram(args.username,args.wordlist)
 
-		# does tor exists?
-		if not os.path.exists('/usr/bin/tor'):
-			try:
-				engine.installTor()
-			except KeyboardInterrupt:
-				engine.kill('Exiting {}...{}'.format(self.g, self.n))
-		if not os.path.exists('/usr/sbin/tor'):
-			engine.kill('Please Install Tor'.format(engine.y,engine.r,engine.n))
+	# does tor exists?
+	if not os.path.exists('/usr/bin/tor'):
+		try:
+			engine.installTor()
+		except KeyboardInterrupt:
+			engine.kill('Exiting {}...{}'.format(self.g, self.n))
+	if not os.path.exists('/usr/sbin/tor'):
+		engine.kill('Please Install Tor'.format(engine.y,engine.r,engine.n))
 
 	# does the account exists?
 	if not engine.exists(engine.username):
